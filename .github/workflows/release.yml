@@ -114,20 +114,20 @@ jobs:
       isDryRun: ${{ needs.prepare.outputs.isDryRun == 'true' }}
 
   # Publish to npm
-  npm-publish:
-    name: NPM Publish
-    needs: [prepare, validate-version, build-native]
-    uses: ./.github/workflows/npm-latest-release.yml
-    secrets:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-    with:
-      version: ${{ needs.prepare.outputs.fullTag }}
-      isDryRun: ${{ needs.prepare.outputs.isDryRun == 'true' }}
+  # npm-publish:
+  #   name: NPM Publish
+  #   needs: [prepare, validate-version, build-native]
+  #   uses: ./.github/workflows/npm-latest-release.yml
+  #   secrets:
+  #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  #   with:
+  #     version: ${{ needs.prepare.outputs.fullTag }}
+  #     isDryRun: ${{ needs.prepare.outputs.isDryRun == 'true' }}
 
   # Create GitHub release with assets
   github-release:
     name: Create GitHub Release
-    needs: [prepare, build-native, build-examples, npm-publish]
+    needs: [prepare, build-native, build-examples]
     runs-on: ubuntu-latest
 
     steps:
