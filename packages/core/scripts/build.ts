@@ -115,6 +115,7 @@ if (buildNative) {
 
     let copiedFiles = 0
     let libraryFileName: string | null = null
+    // Dynamic libraries
     for (const name of ["libopentui", "opentui"]) {
       for (const ext of [".so", ".dll", ".dylib"]) {
         const src = join(libDir, `${name}${ext}`)
@@ -125,6 +126,17 @@ if (buildNative) {
           if (!libraryFileName) {
             libraryFileName = fileName
           }
+        }
+      }
+    }
+    // Static libraries
+    for (const name of ["libopentui", "opentui"]) {
+      for (const ext of [".a", ".lib"]) {
+        const src = join(libDir, `${name}${ext}`)
+        if (existsSync(src)) {
+          const fileName = `${name}${ext}`
+          copyFileSync(src, join(nativeDir, fileName))
+          copiedFiles++
         }
       }
     }
