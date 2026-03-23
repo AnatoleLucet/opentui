@@ -1,5 +1,4 @@
-import type { TextRenderable } from "../renderables/Text.js"
-import type { TextBuffer, TextChunk } from "../text-buffer.js"
+import type { TextChunk } from "../text-buffer.js"
 import { createTextAttributes } from "../utils.js"
 import { parseColor, type ColorInput } from "./RGBA.js"
 
@@ -106,6 +105,16 @@ export const bgBlue = (input: StylableInput): TextChunk => applyStyle(input, { b
 export const bgMagenta = (input: StylableInput): TextChunk => applyStyle(input, { bg: "magenta" })
 export const bgCyan = (input: StylableInput): TextChunk => applyStyle(input, { bg: "cyan" })
 export const bgWhite = (input: StylableInput): TextChunk => applyStyle(input, { bg: "white" })
+
+// Background bright color functions
+export const bgBrightBlack = (input: StylableInput): TextChunk => applyStyle(input, { bg: "brightBlack" })
+export const bgBrightRed = (input: StylableInput): TextChunk => applyStyle(input, { bg: "brightRed" })
+export const bgBrightGreen = (input: StylableInput): TextChunk => applyStyle(input, { bg: "brightGreen" })
+export const bgBrightYellow = (input: StylableInput): TextChunk => applyStyle(input, { bg: "brightYellow" })
+export const bgBrightBlue = (input: StylableInput): TextChunk => applyStyle(input, { bg: "brightBlue" })
+export const bgBrightMagenta = (input: StylableInput): TextChunk => applyStyle(input, { bg: "brightMagenta" })
+export const bgBrightCyan = (input: StylableInput): TextChunk => applyStyle(input, { bg: "brightCyan" })
+export const bgBrightWhite = (input: StylableInput): TextChunk => applyStyle(input, { bg: "brightWhite" })
 
 // Style functions
 export const bold = (input: StylableInput): TextChunk => applyStyle(input, { bold: true })
