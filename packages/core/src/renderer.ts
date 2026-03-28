@@ -1351,14 +1351,22 @@ export class CliRenderer extends EventEmitter implements RenderContext {
     this._hasPointer = true
     this._lastPointerModifiers = mouseEvent.modifiers
 
+    const maybeRenderableId = this.hitTest(mouseEvent.x, mouseEvent.y)
+    const sameElement = maybeRenderableId === this.lastOverRenderableNum
+    this.lastOverRenderableNum = maybeRenderableId
+    const maybeRenderable = Renderable.renderablesByNumber.get(maybeRenderableId)
+
     if (this._console.visible) {
       const consoleBounds = this._console.bounds
-      if (
+
+      const inBounds =
         mouseEvent.x >= consoleBounds.x &&
         mouseEvent.x < consoleBounds.x + consoleBounds.width &&
         mouseEvent.y >= consoleBounds.y &&
         mouseEvent.y < consoleBounds.y + consoleBounds.height
-      ) {
+      const isDragging = this._console.isDragging
+
+      if (inBounds || isDragging) {
         const event = new MouseEvent(null, mouseEvent)
         const handled = this._console.handleMouse(event)
         if (handled) return true
@@ -1366,8 +1374,6 @@ export class CliRenderer extends EventEmitter implements RenderContext {
     }
 
     if (mouseEvent.type === "scroll") {
-      const maybeRenderableId = this.hitTest(mouseEvent.x, mouseEvent.y)
-      const maybeRenderable = Renderable.renderablesByNumber.get(maybeRenderableId)
       const fallbackTarget =
         this._currentFocusedRenderable &&
         !this._currentFocusedRenderable.isDestroyed &&
@@ -1382,11 +1388,6 @@ export class CliRenderer extends EventEmitter implements RenderContext {
       }
       return true
     }
-
-    const maybeRenderableId = this.hitTest(mouseEvent.x, mouseEvent.y)
-    const sameElement = maybeRenderableId === this.lastOverRenderableNum
-    this.lastOverRenderableNum = maybeRenderableId
-    const maybeRenderable = Renderable.renderablesByNumber.get(maybeRenderableId)
 
     if (
       mouseEvent.type === "down" &&
